@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { get } from '../../services/request';
 import Tweets from '../Tweets/Tweets';
 import SymbolInput from '../SymbolInput/SymbolInput';
-import CenteredDiv from './StyledStockTwits';
+import Symbols from '../Symbols/Symbols';
+import CenteredDiv from './CenteredDiv';
 import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 
 const StockTwits = () => {
   const [symbol, setSymbol] = useState('');
+  const [symbols, setSymbols] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tweets, setTweets] = useState(null);
 
@@ -19,14 +21,19 @@ const StockTwits = () => {
   const handleSubmit = event => {
     event.preventDefault();
     if(symbol) {
-      setIsLoading(true);
-      get(`/symbols/${symbol}`)
-        .then(symbolResponse => {
-          setTweets(symbolResponse.messages);
-          setIsLoading(false);
-        });
+      setSymbols([...symbols, symbol]);
+      // setIsLoading(true);
+      // get(`/symbols/${symbol}`)
+      //   .then(symbolResponse => {
+      //     setTweets(symbolResponse.messages);
+      //     setIsLoading(false);
+      //   });
+      setSymbol('');
     }
   };
+
+  const isSymbols = symbols.length > 0;
+  // console.log(isSymbols, symbols);
 
   return (
     <CenteredDiv>
@@ -37,6 +44,9 @@ const StockTwits = () => {
           <AddCircleOutlineRoundedIcon color='primary' />
         </IconButton>
       </form>
+      {isSymbols &&
+        <Symbols symbols={symbols} />
+      }
       {tweets &&
         <Tweets tweets={tweets} />
       }
