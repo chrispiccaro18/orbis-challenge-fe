@@ -11,7 +11,7 @@ import OrbisLogo from '../../../assets/OrbisLogo';
 
 const StockTwits = () => {
   const [symbol, setSymbol] = useState('');
-  const [symbols, setSymbols] = useState(['aapl', 'amd', 'pg', 'goog', 'aapl', 'amd', 'pg', 'goog']);
+  const [symbols, setSymbols] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tweets, setTweets] = useState(null);
 
@@ -21,16 +21,16 @@ const StockTwits = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if(symbol) {
-      setSymbols([...symbols, symbol]);
-      // setIsLoading(true);
-      // get(`/symbols/${symbol}`)
-      //   .then(symbolResponse => {
-      //     setTweets(symbolResponse.messages);
-      //     setIsLoading(false);
-      //   });
+    if(symbol && !symbols.includes(symbol.toUpperCase())) {
+      setIsLoading(true);
+      get(`/symbols/${symbol}`)
+        .then(symbolResponse => {
+          setTweets(symbolResponse.messages);
+          setIsLoading(false);
+        });
+      setSymbols([...symbols, symbol.toUpperCase()]);
       setSymbol('');
-    }
+    } 
   };
 
   const isSymbols = symbols.length > 0;
@@ -47,7 +47,7 @@ const StockTwits = () => {
         </IconButton>
       </form>
       {isSymbols &&
-        <Symbols symbols={symbols} />
+        <Symbols symbols={symbols} setSymbols={setSymbols} />
       }
       {tweets &&
         <Tweets tweets={tweets} />

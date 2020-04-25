@@ -45,9 +45,10 @@ padding: 3px;
 transition: 400ms;
 `;
 
-export const DeleteSymbol = () => {
+// eslint-disable-next-line react/prop-types
+export const DeleteSymbol = ({ handleDelete }) => {
   return (
-    <StyledDelete><ClearIcon fontSize='small' /></StyledDelete>
+    <StyledDelete onClick={handleDelete}><ClearIcon fontSize='small' /></StyledDelete>
   );
 };
 

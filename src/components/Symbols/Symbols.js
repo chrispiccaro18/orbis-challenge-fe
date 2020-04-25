@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SymbolsList, SymbolsItem, DeleteSymbol, StyledContent } from './StyledSymbols';
-// import Symbol from './Symbol';
+import { SymbolsList } from './StyledSymbols';
+import Symbol from './Symbol';
 
-const Symbols = ({ symbols }) => {
+const Symbols = ({ symbols, setSymbols }) => {
+  const handleDelete = (symbols, setSymbols, symbolToDelete) => {
+    const indexToDelete = symbols.findIndex(symbol => symbol === symbolToDelete);
+    setSymbols([...symbols.slice(0, indexToDelete), ...symbols.slice(indexToDelete + 1)]);
+  };
+
   const listOfSymbols = symbols.map((symbol, i) => {
-    // return <Symbol key={i} symbol={symbol} />;
-    return (
-      <SymbolsItem key={i}>
-        <StyledContent>{symbol}</StyledContent>
-        <DeleteSymbol />
-      </SymbolsItem>
-    );
+    return <Symbol
+      key={i}
+      symbol={symbol}
+      handleDelete={() => handleDelete(symbols, setSymbols, symbol)}
+    />;
   });
 
   return (
@@ -24,7 +27,8 @@ const Symbols = ({ symbols }) => {
 Symbols.propTypes = {
   symbols: PropTypes.arrayOf(
     PropTypes.string,
-  )
+  ),
+  setSymbols: PropTypes.func.isRequired,
 };
 
 export default Symbols;
