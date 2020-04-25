@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Card,
+  CardHeader,
+  Avatar,
+  CardContent,
+  Typography,
+} from '@material-ui/core';
 
 const Tweet = ({ tweet }) => {
   const {
@@ -9,23 +16,37 @@ const Tweet = ({ tweet }) => {
 
   const {
     username,
+    avatar_url,
   } = user;
 
   return (
     <li>
-      <h2>{username}</h2>
-      <p>{body}</p>
+      <Card variant='outlined'>
+        <CardHeader
+          avatar={
+            <Avatar
+              alt={`${username} avatar`}
+              src={avatar_url} />
+          }
+          title={username}
+        />
+        <CardContent>
+          <Typography>
+            {body}
+          </Typography>
+        </CardContent>
+      </Card>
     </li>
   );
 };
 
 Tweet.propTypes = {
-  tweet: PropTypes.objectOf({
-    id: PropTypes.string.isRequired,
+  tweet: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     body: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired,
-    user: PropTypes.objectOf({
-      id: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       username: PropTypes.string.isRequired,
       avatar_url: PropTypes.string.isRequired,
       like_count: PropTypes.number.isRequired,

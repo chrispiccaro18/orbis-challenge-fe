@@ -15,17 +15,19 @@ const Tweets = ({ tweets }) => {
 };
 
 Tweets.propTypes = {
-  tweets: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    created_at: PropTypes.string.isRequired,
-    user: PropTypes.objectOf({
-      id: PropTypes.string.isRequired,
-      username: PropTypes.string.isRequired,
-      avatar_url: PropTypes.string.isRequired,
-      like_count: PropTypes.number.isRequired,
+  tweets: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      body: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      user: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        username: PropTypes.string.isRequired,
+        avatar_url: PropTypes.string.isRequired,
+        like_count: PropTypes.number.isRequired,
+      })
     })
-  })
+  )
 };
 
 export default Tweets;
