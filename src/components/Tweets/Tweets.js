@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tweet from '../Tweet/Tweet';
+import Tweet from './Tweet';
 
 const Tweets = ({ tweets }) => {
   const listOfTweets = tweets.map(tweet => {
