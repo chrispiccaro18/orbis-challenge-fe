@@ -7,10 +7,11 @@ import Symbols from '../Symbols/Symbols';
 import CenteredDiv from './CenteredDiv';
 import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
+import OrbisLogo from '../../../assets/OrbisLogo';
 
 const StockTwits = () => {
   const [symbol, setSymbol] = useState('');
-  const [symbols, setSymbols] = useState([]);
+  const [symbols, setSymbols] = useState(['aapl', 'amd', 'pg', 'goog', 'aapl', 'amd', 'pg', 'goog']);
   const [isLoading, setIsLoading] = useState(false);
   const [tweets, setTweets] = useState(null);
 
@@ -37,6 +38,7 @@ const StockTwits = () => {
 
   return (
     <CenteredDiv>
+      <OrbisLogo />
       <h1>Orbis Challenge</h1>
       <form onSubmit={handleSubmit} autoComplete='off'>
         <SymbolInput handleChange={handleChange} symbol={symbol} />
