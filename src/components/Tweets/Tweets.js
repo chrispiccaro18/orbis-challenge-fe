@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import StyledTweets from './StyledTweets';
 import Tweet from './Tweet';
 
 const Tweets = ({ tweets }) => {
@@ -8,9 +9,9 @@ const Tweets = ({ tweets }) => {
   });
 
   return (
-    <ul>
+    <StyledTweets>
       {listOfTweets}
-    </ul>
+    </StyledTweets>
   );
 };
 
