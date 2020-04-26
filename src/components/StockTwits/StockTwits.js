@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Tweets from '../Tweets/Tweets';
 import Symbols from '../Symbols/Symbols';
 import CenteredDiv from './CenteredDiv';
-import OrbisLogo from '../../../assets/OrbisLogo';
 import SymbolForm from '../SymbolForm/SymbolForm';
 
 const StockTwits = () => {
@@ -16,8 +15,6 @@ const StockTwits = () => {
 
   return (
     <CenteredDiv>
-      <OrbisLogo />
-      <h1>Orbis Challenge</h1>
       <SymbolForm
         symbols={symbols}
         symbol={symbol}
@@ -28,7 +25,12 @@ const StockTwits = () => {
         setIsLoading={setIsLoading}
       />
       {isSymbols &&
-        <Symbols symbols={symbols} setSymbols={setSymbols} />
+        <Symbols
+          symbols={symbols}
+          tweets={tweets}
+          setSymbols={setSymbols}
+          setTweets={setTweets}
+        />
       }
       {isLoading && <h2>Loading</h2>}
       {tweets &&
