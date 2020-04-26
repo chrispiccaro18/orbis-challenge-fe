@@ -5,13 +5,16 @@ import SymbolInput from './SymbolInput';
 import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import { get } from '../../services/request';
+import sortTweets from '../../util/sortTweets';
 
 const SymbolForm = ({
   symbols,
   symbol,
+  tweets,
   setSymbols,
   setSymbol,
   setTweets,
+  setIsLoading,
 }) => {
   const handleChange = event => {
     setSymbol(event.target.value);
@@ -22,17 +25,25 @@ const SymbolForm = ({
     const normalizedSymbol = symbol.toUpperCase();
     
     if(symbol && !symbols.includes(normalizedSymbol)) {
+      setIsLoading(true);
       get(`/symbols/${symbol}`)
-        .then(symbolResponse => {
-          setTweets(symbolResponse.messages);
+        .then(({ messages }) => {
+          // use a Set to prevent duplicates
+          const unsortedTweets = [...new Set([...tweets, ...messages])];
+          const sortedTweets = sortTweets(unsortedTweets);
+          setTweets(sortedTweets);
+
           setSymbols([...symbols, normalizedSymbol]);
         })
         .catch(e => {
           if(e === 'Unable to fetch.') {
-            window.alert(`${normalizedSymbol} is an invalid symbol`);
+            window.alert(`Oops! Something went wrong. Make sure ${normalizedSymbol} is an valid symbol.`);
           }
+        })
+        .finally(() => {
+          setIsLoading(false);
+          setSymbol('');
         });
-      setSymbol('');
     } 
   };
 
@@ -49,9 +60,11 @@ const SymbolForm = ({
 SymbolForm.propTypes = {
   symbols: PropTypes.array,
   symbol: PropTypes.string,
+  tweets: PropTypes.array,
   setSymbols: PropTypes.func.isRequired,
   setSymbol: PropTypes.func.isRequired,
   setTweets: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default SymbolForm;

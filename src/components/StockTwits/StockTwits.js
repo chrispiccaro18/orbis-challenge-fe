@@ -8,7 +8,7 @@ import SymbolForm from '../SymbolForm/SymbolForm';
 
 const StockTwits = () => {
   const [symbol, setSymbol] = useState('');
-  const [symbols, setSymbols] = useState(['AAPL']);
+  const [symbols, setSymbols] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tweets, setTweets] = useState([]);
 
@@ -21,17 +21,19 @@ const StockTwits = () => {
       <SymbolForm
         symbols={symbols}
         symbol={symbol}
+        tweets={tweets}
         setSymbols={setSymbols}
         setSymbol={setSymbol}
         setTweets={setTweets}
+        setIsLoading={setIsLoading}
       />
       {isSymbols &&
         <Symbols symbols={symbols} setSymbols={setSymbols} />
       }
+      {isLoading && <h2>Loading</h2>}
       {tweets &&
         <Tweets tweets={tweets} setTweets={setTweets} />
       }
-      {isLoading && <h2>Loading</h2>}
     </CenteredDiv>
   );
 };
