@@ -12,5 +12,10 @@ export default styled.ul`
   li {
     width: 90%;
     margin-bottom: 1rem;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
   }
 `;

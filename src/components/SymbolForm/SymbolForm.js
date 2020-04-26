@@ -11,6 +11,7 @@ const SymbolForm = ({
   symbol,
   setSymbols,
   setSymbol,
+  setTweets,
 }) => {
   const handleChange = event => {
     setSymbol(event.target.value);
@@ -18,14 +19,19 @@ const SymbolForm = ({
 
   const handleSubmit = event => {
     event.preventDefault();
-    if(symbol && !symbols.includes(symbol.toUpperCase())) {
-      // setIsLoading(true);
-      // get(`/symbols/${symbol}`)
-      //   .then(symbolResponse => {
-      //     setTweets(symbolResponse.messages);
-      //     setIsLoading(false);
-      //   });
-      setSymbols([...symbols, symbol.toUpperCase()]);
+    const normalizedSymbol = symbol.toUpperCase();
+    
+    if(symbol && !symbols.includes(normalizedSymbol)) {
+      get(`/symbols/${symbol}`)
+        .then(symbolResponse => {
+          setTweets(symbolResponse.messages);
+          setSymbols([...symbols, normalizedSymbol]);
+        })
+        .catch(e => {
+          if(e === 'Unable to fetch.') {
+            window.alert(`${normalizedSymbol} is an invalid symbol`);
+          }
+        });
       setSymbol('');
     } 
   };
@@ -45,6 +51,7 @@ SymbolForm.propTypes = {
   symbol: PropTypes.string,
   setSymbols: PropTypes.func.isRequired,
   setSymbol: PropTypes.func.isRequired,
+  setTweets: PropTypes.func.isRequired,
 };
 
 export default SymbolForm;

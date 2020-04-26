@@ -4,14 +4,13 @@ import Tweets from '../Tweets/Tweets';
 import Symbols from '../Symbols/Symbols';
 import CenteredDiv from './CenteredDiv';
 import OrbisLogo from '../../../assets/OrbisLogo';
-import { mockMessages } from './mockData';
 import SymbolForm from '../SymbolForm/SymbolForm';
 
 const StockTwits = () => {
   const [symbol, setSymbol] = useState('');
   const [symbols, setSymbols] = useState(['AAPL']);
   const [isLoading, setIsLoading] = useState(false);
-  const [tweets, setTweets] = useState(mockMessages.messages);
+  const [tweets, setTweets] = useState([]);
 
   const isSymbols = symbols.length > 0;
 
@@ -24,12 +23,13 @@ const StockTwits = () => {
         symbol={symbol}
         setSymbols={setSymbols}
         setSymbol={setSymbol}
+        setTweets={setTweets}
       />
       {isSymbols &&
         <Symbols symbols={symbols} setSymbols={setSymbols} />
       }
       {tweets &&
-        <Tweets tweets={tweets} />
+        <Tweets tweets={tweets} setTweets={setTweets} />
       }
       {isLoading && <h2>Loading</h2>}
     </CenteredDiv>
