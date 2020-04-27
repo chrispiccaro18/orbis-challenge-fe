@@ -38,13 +38,15 @@ const SymbolForm = ({
         const sortedTweets = sortTweets([...tweets, ...unsortedTweets]);
         setTweets(sortedTweets);
       })
-      .catch(e => {
-        console.error(e);
+      .then(() => {
+        setSymbolInput('');
+        setSymbols([...symbols, ...newSymbols]);
+      })
+      .catch(() => {
+        window.alert('Oops! There was an error. Check to see if the symbols you input were correct.');
       })
       .finally(() => {
-        setSymbols([...symbols, ...newSymbols]);
         setIsLoading(false);
-        setSymbolInput('');
       });
   };
 
