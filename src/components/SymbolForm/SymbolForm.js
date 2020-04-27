@@ -4,7 +4,7 @@ import StyledForm from './StyledForm';
 import SymbolInput from './SymbolInput';
 import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
-import { get } from '../../services/request';
+import { getTweetsForSymbol } from '../../services/backEndApi';
 import { sortTweets, preventDuplicateTweets } from '../../utils/tweetUtils';
 
 const SymbolForm = ({
@@ -26,8 +26,8 @@ const SymbolForm = ({
     
     if(symbol && !symbols.includes(normalizedSymbol)) {
       setIsLoading(true);
-      get(`/symbols/${symbol}`)
-        .then(({ messages: newTweets }) => {
+      getTweetsForSymbol(symbol)
+        .then(newTweets => {
           const unsortedTweets = preventDuplicateTweets(newTweets, tweets);
           const sortedTweets = sortTweets(unsortedTweets);
           setTweets(sortedTweets);
@@ -38,12 +38,10 @@ const SymbolForm = ({
           if(e === 'Unable to fetch.') {
             window.alert(`Oops! Something went wrong. Make sure ${normalizedSymbol} is a valid symbol.`);
           }
-        })
-        .finally(() => {
-          setIsLoading(false);
-          setSymbol('');
         });
     } 
+    setIsLoading(false);
+    setSymbol('');
   };
 
   return (

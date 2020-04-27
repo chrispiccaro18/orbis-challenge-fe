@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import Tweets from '../Tweets/Tweets';
 import Symbols from '../Symbols/Symbols';
 import StyledHome from './StyledHome';
 import SymbolForm from '../SymbolForm/SymbolForm';
+import { getLiveTweets } from '../../services/backEndApi';
 
 const Home = () => {
   const [symbol, setSymbol] = useState('');
@@ -12,6 +12,21 @@ const Home = () => {
   const [tweets, setTweets] = useState([]);
 
   const isSymbols = symbols.length > 0;
+
+  useEffect(() =>{
+    const interval = setInterval(() => {
+      if(isSymbols) {
+        getLiveTweets(symbols)
+          .then(tweetArrays => {
+            setTweets(tweetArrays.flat());
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [symbols, tweets]);
 
   return (
     <StyledHome>
