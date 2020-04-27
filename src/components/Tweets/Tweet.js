@@ -13,7 +13,10 @@ const Tweet = ({ tweet }) => {
   const {
     body,
     user,
+    created_at,
   } = tweet;
+
+  const dateTweeted = new Date(created_at);
 
   const {
     username,
@@ -30,6 +33,7 @@ const Tweet = ({ tweet }) => {
               src={avatar_url} />
           }
           title={username}
+          subheader={dateTweeted.toLocaleTimeString()}
         />
         <CardContent>
           <Typography>
