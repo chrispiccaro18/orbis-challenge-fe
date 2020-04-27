@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Tweets from '../Tweets/Tweets';
-import Symbols from '../Symbols/Symbols';
 import StyledHome from './StyledHome';
-import SymbolForm from '../SymbolForm/SymbolForm';
+import Tweets from '../Tweets';
+import Symbols from '../Symbols';
+import SymbolForm from '../SymbolForm';
 import { getLiveTweets } from '../../services/backEndApi';
 import { useInterval } from '../../hooks';
 import { preventDuplicateTweets, sortTweets } from '../../utils/tweetUtils';
