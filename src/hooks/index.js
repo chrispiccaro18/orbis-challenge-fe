@@ -16,10 +16,7 @@ export const useInterval = (callback, delay) => {
     }
     if(delay !== null) {
       let id = setInterval(tick, delay);
-      return () => {
-        console.log('clean up');
-        clearInterval(id);
-      };
+      return () => clearInterval(id);
     }
   }, [delay]);
 };

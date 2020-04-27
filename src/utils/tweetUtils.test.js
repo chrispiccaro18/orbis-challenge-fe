@@ -1,5 +1,5 @@
 import { sortTweets, deleteTweets, preventDuplicateTweets, countOfTweetsWithSymbol } from './tweetUtils';
-import { aaplMock, amdMock, sortedTweetIds } from './mockData';
+import { aaplMock, amdMock, sortedTweetIds, originalTweets } from './mockData';
 
 describe('sort tweets', () => {
   it('sorts tweets by most recent', () => {
@@ -7,47 +7,6 @@ describe('sort tweets', () => {
     const sortedTweets = sortTweets(unsortedTweets);
     expect(sortedTweets.map(tweet => tweet.id)).toEqual(sortedTweetIds);
   });
-
-  const originalTweets = [
-    {
-      id: 1,
-      symbols: [
-        {
-          symbol: 'FB',
-        },
-        {
-          symbol: 'AAPL',
-        },
-      ]
-    },
-    {
-      id: 2,
-      symbols: [
-        {
-          symbol: 'AMD',
-        },
-        {
-          symbol: 'VOO',
-        },
-      ]
-    },
-    {
-      id: 3,
-      symbols: [
-        {
-          symbol: 'AMD',
-        }
-      ]
-    },
-    {
-      id: 4,
-      symbols: [
-        {
-          symbol: 'FB',
-        }
-      ]
-    }
-  ];
 
   it('deletes tweets with the symbol to be deleted', () => {
     const symbolToDelete = 'AMD';

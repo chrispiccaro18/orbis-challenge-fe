@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { StyledInput } from './StyledInput';
 import { TextField } from '@material-ui/core';
 
 const SymbolInput = ({ handleChange, symbol }) => {

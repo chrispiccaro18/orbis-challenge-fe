@@ -9,3 +9,44 @@ export const sortedTweetIds = [
   208629590, 208629566,
   208629403, 208628844
 ];
+
+export const originalTweets = [
+  {
+    id: 1,
+    symbols: [
+      {
+        symbol: 'FB',
+      },
+      {
+        symbol: 'AAPL',
+      },
+    ]
+  },
+  {
+    id: 2,
+    symbols: [
+      {
+        symbol: 'AMD',
+      },
+      {
+        symbol: 'VOO',
+      },
+    ]
+  },
+  {
+    id: 3,
+    symbols: [
+      {
+        symbol: 'AMD',
+      }
+    ]
+  },
+  {
+    id: 4,
+    symbols: [
+      {
+        symbol: 'FB',
+      }
+    ]
+  }
+];
