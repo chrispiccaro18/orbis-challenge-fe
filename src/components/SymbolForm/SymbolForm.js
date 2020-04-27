@@ -29,7 +29,6 @@ const SymbolForm = ({
       return symbol && !symbols.includes(symbol);
     });
     
-    
     setIsLoading(true);
     getLiveTweets(newSymbols)
       .then(tweetArrays => {
