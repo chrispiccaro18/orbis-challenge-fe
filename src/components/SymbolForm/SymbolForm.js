@@ -29,8 +29,7 @@ const SymbolForm = ({
       return symbol && !symbols.includes(symbol);
     });
     
-    setSymbols([...symbols, ...newSymbols]);
-
+    
     setIsLoading(true);
     getLiveTweets(newSymbols)
       .then(tweetArrays => {
@@ -44,6 +43,7 @@ const SymbolForm = ({
         console.error(e);
       })
       .finally(() => {
+        setSymbols([...symbols, ...newSymbols]);
         setIsLoading(false);
         setSymbolInput('');
       });
