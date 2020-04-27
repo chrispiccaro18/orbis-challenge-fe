@@ -6,7 +6,7 @@ import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import { getLiveTweets } from '../../services/backEndApi';
 import { sortTweets, preventDuplicateTweets } from '../../utils/tweetUtils';
-import { normalizeSymbolInput } from '../../utils/strings';
+import { normalizeSymbolInput, validSymbolRegex } from '../../utils/strings';
 
 const SymbolForm = ({
   symbols,
@@ -26,6 +26,10 @@ const SymbolForm = ({
     const newSymbolsSet = new Set(normalizeSymbolInput(symbolInput));
     
     const newSymbols = [...newSymbolsSet].filter(symbol => {
+      if(!validSymbolRegex.test(symbol)) {
+        window.alert('Only letters, \'.\', and \'-\' are valid in symbols.');
+        return false;
+      }
       return symbol && !symbols.includes(symbol);
     });
     
