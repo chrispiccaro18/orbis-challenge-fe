@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Tweets from '../Tweets/Tweets';
 import Symbols from '../Symbols/Symbols';
 import StyledHome from './StyledHome';
 import SymbolForm from '../SymbolForm/SymbolForm';
 import { getLiveTweets } from '../../services/backEndApi';
+import { useInterval } from '../../hooks';
+import { preventDuplicateTweets, sortTweets } from '../../utils/tweetUtils';
 
 const Home = () => {
   const [symbol, setSymbol] = useState('');
@@ -13,20 +15,19 @@ const Home = () => {
 
   const isSymbols = symbols.length > 0;
 
-  useEffect(() =>{
-    const interval = setInterval(() => {
-      if(isSymbols) {
-        getLiveTweets(symbols)
-          .then(tweetArrays => {
-            setTweets(tweetArrays.flat());
-          })
-          .catch(e => {
-            console.error(e);
-          });
-      }
-    }, 30000);
-    return () => clearInterval(interval);
-  }, [symbols, tweets]);
+  useInterval(() => {
+    getLiveTweets(symbols)
+      .then(tweetArrays => {
+        const unsortedTweets = tweetArrays.reduce((oldTweets, newTweets) => {
+          return preventDuplicateTweets(newTweets, oldTweets);
+        }, []);
+        const sortedTweets = sortTweets(unsortedTweets);
+        setTweets(sortedTweets);
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  }, 15000);
 
   return (
     <StyledHome>

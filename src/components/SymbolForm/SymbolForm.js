@@ -26,7 +26,7 @@ const SymbolForm = ({
     
     if(symbol && !symbols.includes(normalizedSymbol)) {
       setIsLoading(true);
-      getTweetsForSymbol(symbol)
+      getTweetsForSymbol(normalizedSymbol)
         .then(newTweets => {
           const unsortedTweets = preventDuplicateTweets(newTweets, tweets);
           const sortedTweets = sortTweets(unsortedTweets);
