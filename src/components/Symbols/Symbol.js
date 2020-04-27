@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import { SymbolsItem, DeleteSymbol, StyledContent } from './StyledSymbols';
 
 
-const Symbol = ({ symbol, handleDelete }) => {
+const Symbol = ({ symbol, numberOfTweets, handleDelete }) => {
     
   return (
     <SymbolsItem>
+      <div className='number-of-tweets'>
+        <p>{numberOfTweets}</p>
+      </div>
       <StyledContent>{symbol}</StyledContent>
       <DeleteSymbol handleDelete={handleDelete} />
     </SymbolsItem>
@@ -17,6 +20,7 @@ const Symbol = ({ symbol, handleDelete }) => {
 
 Symbol.propTypes = {
   symbol: PropTypes.string.isRequired,
+  numberOfTweets: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import { sortTweets, deleteTweets, preventDuplicateTweets } from './tweetUtils';
+import { sortTweets, deleteTweets, preventDuplicateTweets, countOfTweetsWithSymbol } from './tweetUtils';
 import { aaplMock, amdMock, sortedTweetIds } from './mockData';
 
 describe('sort tweets', () => {
@@ -74,5 +74,11 @@ describe('sort tweets', () => {
     ];
     const results = preventDuplicateTweets(newTweets, originalTweets);
     expect(results.map(({ id }) => id)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it('counts the amount of tweets with a given symbol', () => {
+    const symbol = 'AMD';
+    const result = countOfTweetsWithSymbol(originalTweets, symbol);
+    expect(result).toBe(2);
   });
 });

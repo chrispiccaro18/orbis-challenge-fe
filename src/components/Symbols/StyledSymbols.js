@@ -22,10 +22,25 @@ export const SymbolsItem = styled.li`
   background-color: #61a8e1;
   text-transform: uppercase;
   min-width: 100px;
-  padding: 6px 6px 6px 16px;
+  padding: 6px 6px 6px 6px;
   border-radius: 4px;
   line-height: 1.75;
   font-weight: 500;
+
+  .number-of-tweets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    margin-right: 7px;
+
+    p {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const StyledContent = styled.p`

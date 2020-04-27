@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SymbolsList } from './StyledSymbols';
 import Symbol from './Symbol';
-import { deleteTweets } from '../../utils/tweetUtils';
+import { deleteTweets, countOfTweetsWithSymbol } from '../../utils/tweetUtils';
 
 const Symbols = ({
   symbols,
@@ -20,9 +20,11 @@ const Symbols = ({
   };
 
   const listOfSymbols = symbols.map((symbol, i) => {
+    const numberOfTweets = countOfTweetsWithSymbol(tweets, symbol);
     return <Symbol
       key={i}
       symbol={symbol}
+      numberOfTweets={numberOfTweets}
       handleDelete={() => handleDelete(symbols, setSymbols, symbol, tweets, setTweets)}
     />;
   });
