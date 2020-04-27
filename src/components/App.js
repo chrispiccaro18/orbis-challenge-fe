@@ -1,13 +1,13 @@
 import React from 'react';
 import '../reset.css';
-import StockTwits from './StockTwits/StockTwits';
+import Home from './Home/Home';
 import Header from './Header/Header';
 
 export default function App() {
   return (
     <>
       <Header />
-      <StockTwits />
+      <Home />
     </>
   );
 }

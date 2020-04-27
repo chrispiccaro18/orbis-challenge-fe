@@ -7,7 +7,7 @@ import {
   CardContent,
   Typography,
 } from '@material-ui/core';
-import { decodeSpecialChars } from '../../util/strings';
+import { decodeSpecialChars } from '../../utils/strings';
 
 const Tweet = ({ tweet }) => {
   const {

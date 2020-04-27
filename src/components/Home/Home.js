@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import Tweets from '../Tweets/Tweets';
 import Symbols from '../Symbols/Symbols';
-import CenteredDiv from './CenteredDiv';
+import StyledHome from './StyledHome';
 import SymbolForm from '../SymbolForm/SymbolForm';
 
-const StockTwits = () => {
+const Home = () => {
   const [symbol, setSymbol] = useState('');
   const [symbols, setSymbols] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ const StockTwits = () => {
   const isSymbols = symbols.length > 0;
 
   return (
-    <CenteredDiv>
+    <StyledHome>
       <SymbolForm
         symbols={symbols}
         symbol={symbol}
@@ -24,20 +24,21 @@ const StockTwits = () => {
         setTweets={setTweets}
         setIsLoading={setIsLoading}
       />
-      {isSymbols &&
+      {isSymbols ?
         <Symbols
           symbols={symbols}
           tweets={tweets}
           setSymbols={setSymbols}
           setTweets={setTweets}
         />
+        : <p className="greeting">Add a symbol to see the latest tweets.</p>
       }
-      {isLoading && <h2>Loading</h2>}
+      {isLoading && <h2>Loading...</h2>}
       {tweets &&
         <Tweets tweets={tweets} setTweets={setTweets} />
       }
-    </CenteredDiv>
+    </StyledHome>
   );
 };
 
-export default StockTwits;
+export default Home;
