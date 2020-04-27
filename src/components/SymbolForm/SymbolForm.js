@@ -38,10 +38,12 @@ const SymbolForm = ({
           if(e === 'Unable to fetch.') {
             window.alert(`Oops! Something went wrong. Make sure ${normalizedSymbol} is a valid symbol.`);
           }
+        })
+        .finally(() => {
+          setIsLoading(false);
+          setSymbol('');
         });
-    } 
-    setIsLoading(false);
-    setSymbol('');
+    }
   };
 
   return (
