@@ -8,7 +8,7 @@ import { useInterval } from '../../hooks';
 import { preventDuplicateTweets, sortTweets } from '../../utils/tweetUtils';
 
 const Home = () => {
-  const [symbol, setSymbol] = useState('');
+  const [symbolInput, setSymbolInput] = useState('');
   const [symbols, setSymbols] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tweets, setTweets] = useState([]);
@@ -33,10 +33,10 @@ const Home = () => {
     <StyledHome>
       <SymbolForm
         symbols={symbols}
-        symbol={symbol}
+        symbolInput={symbolInput}
         tweets={tweets}
         setSymbols={setSymbols}
-        setSymbol={setSymbol}
+        setSymbolInput={setSymbolInput}
         setTweets={setTweets}
         setIsLoading={setIsLoading}
       />

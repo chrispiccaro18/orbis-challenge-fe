@@ -4,51 +4,54 @@ import StyledForm from './StyledForm';
 import SymbolInput from './SymbolInput';
 import { IconButton } from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
-import { getTweetsForSymbol } from '../../services/backEndApi';
+import { getLiveTweets } from '../../services/backEndApi';
 import { sortTweets, preventDuplicateTweets } from '../../utils/tweetUtils';
+import { normalizeSymbolInput } from '../../utils/strings';
 
 const SymbolForm = ({
   symbols,
-  symbol,
+  symbolInput,
   tweets,
   setSymbols,
-  setSymbol,
+  setSymbolInput,
   setTweets,
   setIsLoading,
 }) => {
   const handleChange = event => {
-    setSymbol(event.target.value);
+    setSymbolInput(event.target.value);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    const normalizedSymbol = symbol.toUpperCase();
+    const newSymbolsSet = new Set(normalizeSymbolInput(symbolInput));
     
-    if(symbol && !symbols.includes(normalizedSymbol)) {
-      setIsLoading(true);
-      getTweetsForSymbol(normalizedSymbol)
-        .then(newTweets => {
-          const unsortedTweets = preventDuplicateTweets(newTweets, tweets);
-          const sortedTweets = sortTweets(unsortedTweets);
-          setTweets(sortedTweets);
+    const newSymbols = [...newSymbolsSet].filter(symbol => {
+      return symbol && !symbols.includes(symbol);
+    });
+    
+    setSymbols([...symbols, ...newSymbols]);
 
-          setSymbols([...symbols, normalizedSymbol]);
-        })
-        .catch(e => {
-          if(e === 'Unable to fetch.') {
-            window.alert(`Oops! Something went wrong. Make sure ${normalizedSymbol} is a valid symbol.`);
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-          setSymbol('');
-        });
-    }
+    setIsLoading(true);
+    getLiveTweets(newSymbols)
+      .then(tweetArrays => {
+        const unsortedTweets = tweetArrays.reduce((oldTweets, newTweets) => {
+          return preventDuplicateTweets(newTweets, oldTweets);
+        }, []);
+        const sortedTweets = sortTweets([...tweets, ...unsortedTweets]);
+        setTweets(sortedTweets);
+      })
+      .catch(e => {
+        console.error(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setSymbolInput('');
+      });
   };
 
   return (
     <StyledForm onSubmit={handleSubmit} autoComplete='off'>
-      <SymbolInput handleChange={handleChange} symbol={symbol} />
+      <SymbolInput handleChange={handleChange} symbolInput={symbolInput} />
       <div className='button-container'>
         <IconButton type='submit' aria-label='add'>
           <AddCircleOutlineRoundedIcon fontSize='large' color='primary' />
@@ -60,10 +63,10 @@ const SymbolForm = ({
 
 SymbolForm.propTypes = {
   symbols: PropTypes.array,
-  symbol: PropTypes.string,
+  symbolInput: PropTypes.string,
   tweets: PropTypes.array,
   setSymbols: PropTypes.func.isRequired,
-  setSymbol: PropTypes.func.isRequired,
+  setSymbolInput: PropTypes.func.isRequired,
   setTweets: PropTypes.func.isRequired,
   setIsLoading: PropTypes.func.isRequired,
 };
