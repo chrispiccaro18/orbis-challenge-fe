@@ -6,9 +6,6 @@ export default styled.form`
 
   .button-container {
     margin-left: .25rem;
-    /* height: 100%;
-    border: 1px solid lightgray;
-    border-radius: 4px; */
     
     button {
       display: flex;

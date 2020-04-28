@@ -24,4 +24,4 @@ export default styled.div`
     /* https://www.smashingmagazine.com/2016/05/fluid-typography/ */
     font-size: calc(16px + (28 - 16) * (100vw - 480px) / (1300 - 480));
   }
-  `;
+`;
